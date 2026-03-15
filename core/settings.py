@@ -42,9 +42,9 @@ INSTALLED_APPS = [
     
     'accounts',
     'events',
-    'bookings'.
+    'bookings',
     'payments',
-    'analytics'
+    'analytics',
 ]
 
 AUTH_USER_MODEL =  'accounts.User'
