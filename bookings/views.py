@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .model import Booking
+from .models import Booking
 from .serializers import BookingSerializer
 
 # Create your views here.
