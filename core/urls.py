@@ -16,6 +16,13 @@ Including another URLconf
 """
 from rest_framework.routers import DefaultRouter
 from events.views import EventViewSet
+from django.contrib import admin
+from django.urls import path, include
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
 
 router = DefaultRouter()
 
@@ -23,4 +30,17 @@ router.register('events', EventViewSet)
 
 urlpatterns = [
     path('api/', include(router.urls)),
+    path('admin/', admin.site.urls),
+
+    # JWT Authentication Routes
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
+    # App Routes
+    path('api/events/', include('events.urls')),
+    path('api/bookings/', include('bookings.urls')),
+    path('api/payments/', include('payments.urls')),
+    path('api/analytics/', include('analytics.urls')),
 ]
+
+
