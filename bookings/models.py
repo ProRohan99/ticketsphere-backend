@@ -19,3 +19,11 @@ class Booking(models.Model):
     status = models.CharField(max_length=20, default="Confirmed")
 
     created_at = models.DateTimeField(auto_now_add=True)
+    
+    def delete(self, *args, **kwargs):
+        # restore seats
+        event = self.event
+        event.available_seats += self.quantity
+        event.save()
+
+        super().delete(*args, **kwargs)
