@@ -1,66 +1,128 @@
-# TicketSphere 🎟️
+# 🎟️ TicketSphere Backend API
 
-TicketSphere is a **Django REST API based event ticket booking system** that allows users to browse events, book tickets, and manage payments.
-The project demonstrates backend architecture for a scalable ticketing platform.
+A scalable Event Ticket Booking Backend built using Django and Django REST Framework.
+
+This project provides REST APIs for managing events, bookings, and payments with authentication and seat management logic.
 
 ---
 
 ## 🚀 Features
 
-* Event management system
-* Ticket booking functionality
-* Seat availability tracking
-* Overbooking prevention
-* Payment record management
-* Event filtering by location/category
-* Django Admin management
-* RESTful API architecture
+### 🔐 Authentication
+
+* JWT-based authentication
+* Secure API access using access tokens
+
+### 🎫 Event Management
+
+* Create, update, delete events
+* Filter events by category and location
+* Track total and available seats
+
+### 📌 Booking System
+
+* Book tickets for events
+* Prevent duplicate bookings per user
+* Prevent overbooking
+* Automatic seat deduction on booking
+
+### 💳 Payment System
+
+* Record payment details
+* Link payments with bookings
+* Track payment status
 
 ---
 
-## 🏗️ Backend Architecture
-
-The backend is built using:
+## 🛠️ Tech Stack
 
 * Python
 * Django
 * Django REST Framework
-* SQLite (development database)
-
-Architecture flow:
-
-User Request → API Endpoint → Serializer → Model → Database → Response
+* JWT Authentication
+* SQLite
 
 ---
 
 ## 📂 Project Structure
 
-```
 ticketsphere/
 │
-├── core/                 # Django project settings
-│
-├── events/               # Event management
-│   ├── models.py
-│   ├── serializers.py
-│   ├── views.py
-│   └── urls.py
-│
-├── bookings/             # Ticket booking system
-│   ├── models.py
-│   ├── serializers.py
-│   ├── views.py
-│   └── urls.py
-│
-├── payments/             # Payment records
-│   ├── models.py
-│   ├── serializers.py
-│   ├── views.py
-│   └── urls.py
-│
+├── core/              # Project settings
+├── events/            # Event APIs
+├── bookings/          # Booking logic
+├── payments/          # Payment APIs
 ├── manage.py
-└── requirements.txt
-```
+├── requirements.txt
+└── README.md
+
+---
+
+## ⚙️ Setup Instructions
+
+### 1. Clone Repository
+
+git clone https://github.com/ProRohan99/ticketsphere-backend.git
+
+cd ticketsphere
+
+---
+
+### 2. Create Virtual Environment
+
+python -m venv venv
+
+Activate:
+
+Windows:
+venv\Scripts\activate
+
+---
+
+### 3. Install Dependencies
+
+pip install -r requirements.txt
+
+---
+
+### 4. Apply Migrations
+
+python manage.py migrate
+
+---
+
+### 5. Create Superuser
+
+python manage.py createsuperuser
+
+---
+
+### 6. Run Server
+
+python manage.py runserver
+
+---
+
+## 🔑 Authentication (JWT)
+
+### Get Token
+
+POST /api/token/
+
+Body:
+
+{
+"username": "your_username",
+"password": "your_password"
+}
+
+---
+
+### Use Token in APIs
+
+Add header:
+
+Authorization: Bearer <access_token>
 
 ---
 
@@ -68,172 +130,58 @@ ticketsphere/
 
 ### Events
 
-GET all events
-
-```
-GET /api/events/
-```
-
-Create event
-
-```
-POST /api/events/
-```
-
-Filter events
-
-```
-GET /api/events/?location=Bangalore
-```
-
----
+* GET /api/events/
+* POST /api/events/
 
 ### Bookings
 
-Create booking
-
-```
-POST /api/bookings/
-```
-
-Get bookings
-
-```
-GET /api/bookings/
-```
-
----
+* GET /api/bookings/
+* POST /api/bookings/
 
 ### Payments
 
-Create payment
-
-```
-POST /api/payments/
-```
-
-Get payments
-
-```
-GET /api/payments/
-```
+* GET /api/payments/
+* POST /api/payments/
 
 ---
 
-## 🎫 Booking Logic
+## 🧪 Sample Booking JSON
 
-When a user books tickets:
-
-1. System checks seat availability
-2. Prevents overbooking
-3. Deducts booked seats from event
-4. Creates booking record
-
-Example:
-
-```
-Event seats: 500
-User books: 2
-Remaining seats: 498
-```
+{
+"user": 1,
+"event": 1,
+"quantity": 2,
+"total_price": 2000,
+"status": "confirmed"
+}
 
 ---
 
-## 🧪 Testing APIs
+## 🧠 Key Backend Logic
 
-You can test APIs using:
-
-* Postman
-* Thunder Client
-* Django REST Framework browser interface
-
-Example API:
-
-```
-http://127.0.0.1:8000/api/events/
-```
+* Seat availability validation before booking
+* Duplicate booking prevention
+* Automatic seat deduction
+* Token-based authentication
 
 ---
 
-## ⚙️ Installation
+## 🔮 Future Enhancements
 
-Clone the repository:
-
-```
-git clone https://github.com/yourusername/ticketsphere-backend.git
-```
-
-Navigate to project:
-
-```
-cd ticketsphere-backend
-```
-
-Create virtual environment:
-
-```
-python -m venv venv
-```
-
-Activate environment:
-
-```
-venv\Scripts\activate
-```
-
-Install dependencies:
-
-```
-pip install -r requirements.txt
-```
-
-Run migrations:
-
-```
-python manage.py migrate
-```
-
-Create superuser:
-
-```
-python manage.py createsuperuser
-```
-
-Run server:
-
-```
-python manage.py runserver
-```
-
----
-
-## 🔑 Admin Panel
-
-Access Django admin:
-
-```
-http://127.0.0.1:8000/admin
-```
-
-Admin can:
-
-* create events
-* manage bookings
-* track payments
-
----
-
-## 📈 Future Improvements
-
-* JWT Authentication
-* Payment gateway integration
-* Email ticket confirmation
-* Seat locking mechanism
-* Analytics dashboard
-* React frontend integration
+* Payment gateway integration (Stripe/Razorpay)
+* Email notifications
+* Admin dashboard
+* Event analytics
+* Frontend integration (React)
 
 ---
 
 ## 👨‍💻 Author
 
-Developed as a backend system for an event ticketing platform using Django REST Framework.
+Rohan Mukherjee
+
+---
+
+## ⭐ Notes
+
+This project is built for learning, backend development practice, and demonstrating API design using Django REST Framework.
